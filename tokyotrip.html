@@ -4,23 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>東京八天七夜行程</title>
-    <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="images/icon.png" type="image/png">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* 淺色背景 */
+            background-color: #f7f7f7; /* 更柔和的淺灰色，增加日式淡雅感 */
             color: #334155;
         }
         .container {
-            max-width: 800px;
+            max-width: 900px; /* 稍微寬一些，提供更多留白 */
         }
         .day-section {
             background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border-radius: 8px; /* 稍微小一點的圓角，更精緻 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* 更細微的陰影 */
+            border: 1px solid #e5e5e5; /* 淺灰色邊框，增加質感 */
             display: none; /* 預設隱藏所有行程區塊 */
         }
         .day-section.active {
@@ -28,98 +28,125 @@
         }
         .map-list-link {
             display: inline-block;
-            background-color: #10B981; /* 綠色按鈕 */
-            color: white;
+            background-color: #a7f3d0; /* 淡綠色，自然清新的感覺 */
+            color: #166534; /* 深綠色文字，搭配背景 */
             font-weight: 600;
             padding: 8px 16px;
-            border-radius: 8px;
+            border-radius: 6px; /* 柔和的圓角 */
             text-decoration: none;
             transition: background-color 0.3s ease-in-out;
             margin-top: 16px;
+            border: 1px solid #86efac; /* 更淺的綠色邊框 */
         }
         .map-list-link:hover {
-            background-color: #059669;
+            background-color: #86efac;
         }
         .day-nav-button {
-            background-color: #cbd5e1; /* 淺灰 */
-            color: #475569;
-            font-weight: 600;
+            background-color: #f0f0f0; /* 更淡的灰色 */
+            color: #525252; /* 深灰色文字 */
+            font-weight: 500; /* 稍微細一點的字重，更優雅 */
             padding: 8px 12px;
-            border-radius: 8px;
+            border-radius: 6px; /* 柔和的圓角 */
             cursor: pointer;
             transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
             flex-grow: 1; /* Allow buttons to grow and fill space */
             text-align: center;
+            border: 1px solid #e0e0e0; /* 淺灰色邊框 */
         }
         .day-nav-button.selected {
-            background-color: #3b82f6; /* 藍色 */
-            color: white;
+            background-color: #bfdbfe; /* 淡藍色，作為選中狀態，柔和不刺眼 */
+            color: #1e40af; /* 深藍色文字 */
+            border: 1px solid #93ccea; /* 更淺的藍色邊框 */
         }
         .day-nav-button:hover:not(.selected) {
-            background-color: #94a3b8;
+            background-color: #e0e0e0;
         }
         .location-item {
             display: flex;
             align-items: flex-start; /* Align items to the top */
-            margin-bottom: 24px; /* Space between location items */
+            margin-bottom: 20px; /* 稍微小一點的 margin */
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f0f0f0; /* 淺灰色分隔線，增加區塊感 */
+        }
+        .location-item:last-child {
+            border-bottom: none; /* 最後一個項目下方不需要分隔線 */
         }
         .location-item img {
-            width: 100px; /* Adjust image size for better display */
-            height: 100px;
+            width: 90px; /* 稍微小一點的圖片，更精緻 */
+            height: 90px;
             object-fit: cover;
-            border-radius: 8px;
-            margin-right: 16px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            margin-right: 12px; /* 稍微小一點的 margin */
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
             flex-shrink: 0; /* Prevent image from shrinking */
         }
         .location-item div {
             flex-grow: 1; /* Allow text content to take remaining space */
         }
         .location-link {
-            color: #3b82f6; /* Blue link color */
+            color: #3b82f6; /* 保留藍色，但可以考慮更柔和的藍 */
             text-decoration: none;
+            transition: color 0.2s ease-in-out;
         }
         .location-link:hover {
             text-decoration: underline;
+            color: #1d4ed8;
+        }
+        /* Custom responsive styles for day navigation */
+        @media (max-width: 639px) { /* Tailwind's 'sm' breakpoint is 640px. We target screens smaller than 'sm' */
+            #day-nav-container {
+                flex-wrap: wrap; /* Allow items to wrap to the next line */
+                justify-content: space-between; /* Distribute items evenly with space between them */
+            }
+            .day-nav-button {
+                flex: 0 0 calc(25% - 8px); /* Each button takes roughly 25% width, accounting for spacing */
+                margin-bottom: 8px; /* Add some space between rows */
+                font-size: 0.875rem; /* 小一點的字體，避免文字過長換行 */
+            }
         }
     </style>
 </head>
-<body class="p-4 sm:p-6 md:p-8">
+<body class="p-4 sm:p-6 md:p-8 bg-neutral-100">
     <div class="container mx-auto">
-        <!-- 首頁/行程總覽 -->
-        <header class="text-center mb-8 p-6 bg-white rounded-xl shadow-md">
-            <h1 class="text-3xl sm:text-4xl font-bold mb-2 text-blue-700">大猋美少女東京之旅</h1>
-            <p class="text-lg sm:text-xl mb-4">
-                <span class="font-semibold">住宿：</span>Dash Living Tsukiji            </p>
-                <span class="font-semibold">地址：</span>日本〒104-0045 Tokyo, Chuo City, Tsukiji, 6 Chome−1−4 Dash Living Tsukiji
-            </p>
-            <a href="https://maps.app.goo.gl/gm9zArea838FoqYw8" target="_blank" rel="noopener noreferrer" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out">
-                查看飯店地圖
-            </a>
+        <header class="mb-8 p-6 bg-white rounded-lg shadow-md border border-neutral-200">
+            <div class="flex justify-between items-center mb-4">
+                <div class="text-left">
+                    <h1 class="text-2xl sm:text-3xl font-bold mb-2 text-gray-700">大猋美少女東京之旅</h1>
+                    <p class="text-lg sm:text-xl mb-2 text-gray-600">
+                        <span class="font-semibold text-gray-700">住宿：</span>Dash Living Tsukiji
+                    </p>
+                    <p class="text-lg sm:text-xl mb-2 text-gray-600">
+                        <span class="font-semibold text-gray-700">地址：</span>日本〒104-0045 Tokyo, Chuo City, Tsukiji, 6 Chome−1−4 Dash Living Tsukiji
+                    </p>
+                    <a href="https://maps.app.goo.gl/gm9zArea838FoqYw8" target="_blank" rel="noopener noreferrer" class="inline-block bg-blue-200 hover:bg-blue-300 text-blue-700 font-semibold py-2 px-4 rounded-md transition duration-300 ease-in-out border border-blue-200">
+                        查看飯店地圖
+                    </a>
+                </div>
+                <img src="images/icon.png" alt="行程圖示" class="w-20 h-20 rounded-full shadow-sm">
+            </div>
         </header>
 
-        <!-- 每日行程導航按鈕 -->
-        <nav class="mb-6 bg-white p-4 rounded-xl shadow-md overflow-x-auto">
-            <div id="day-nav-container" class="flex space-x-2 justify-center">
-                <button class="day-nav-button selected" data-day="day1">第1天</button>
-                <button class="day-nav-button" data-day="day2">第2天</button>
-                <button class="day-nav-button" data-day="day3">第3天</button>
-                <button class="day-nav-button" data-day="day4">第4天</button>
-                <button class="day-nav-button" data-day="day5">第5天</button>
-                <button class="day-nav-button" data-day="day6">第6天</button>
-                <button class="day-nav-button" data-day="day7">第7天</button>
-                <button class="day-nav-button" data-day="day8">第8天</button>
+        <nav class="mb-6 bg-neutral-100 p-4 rounded-lg shadow-md overflow-x-auto border border-neutral-200">
+            <div id="day-nav-container" class="flex flex-wrap justify-center sm:space-x-2">
+                <button class="day-nav-button selected rounded-md bg-blue-200 text-blue-700" data-day="day1">第1天</button>
+                <button class="day-nav-button rounded-md bg-neutral-200 text-neutral-700" data-day="day2">第2天</button>
+                <button class="day-nav-button rounded-md bg-neutral-200 text-neutral-700" data-day="day3">第3天</button>
+                <button class="day-nav-button rounded-md bg-neutral-200 text-neutral-700" data-day="day4">第4天</button>
+                <button class="day-nav-button rounded-md bg-neutral-200 text-neutral-700" data-day="day5">第5天</button>
+                <button class="day-nav-button rounded-md bg-neutral-200 text-neutral-700" data-day="day6">第6天</button>
+                <button class="day-nav-button rounded-md bg-neutral-200 text-neutral-700" data-day="day7">第7天</button>
+                <button class="day-nav-button rounded-md bg-neutral-200 text-neutral-700" data-day="day8">第8天</button>
             </div>
         </nav>
 
-        <!-- 每日行程詳情 -->
         <main>
-            <!-- 第1天 -->
             <section id="day1" class="day-section active mb-6 p-5 sm:p-6">
-                <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">第一天 (2025/07/24)</h2>
+                <h2 class="text-xl sm:text-2xl font-semibold mb-3 text-gray-800 flex items-center">
+                    <img src="images/icon.png" alt="日圖示" class="w-6 h-6 mr-2 flex-shrink-0">
+                    第一天 (2025/07/24)
+                </h2>
                 <div class="space-y-4">
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/01臺北松山機場.png" alt="臺北松山機場圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/DexyXeqGNFCTgo6R9" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -129,7 +156,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/01羽田機場.png" alt="東京國際機場(羽田機場)圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/NNVyrJffCj24MevGA" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -139,15 +165,15 @@
                         </div>
                     </div>
                 </div>
-                <!-- 第一天沒有整體地圖清單連結 -->
-            </section>
+                </section>
 
-            <!-- 第2天 -->
             <section id="day2" class="day-section mb-6 p-5 sm:p-6">
-                <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">第二天 - 築地銀座 (2025/07/25)</h2>
+                <h2 class="text-xl sm:text-2xl font-semibold mb-3 text-gray-800 flex items-center">
+                    <img src="images/icon.png" alt="日圖示" class="w-6 h-6 mr-2 flex-shrink-0">
+                    第二天 - 築地銀座 (2025/07/25)
+                </h2>
                 <div class="space-y-4">
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/02築地場外市場.png" alt="築地場外市場圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/PxaymyiFNtrJtp659" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -157,7 +183,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/02uniqlo.png" alt="UNIQLO圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/4EYiuXo5FmZL482s8" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -167,7 +192,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/02muji.png" alt="無印良品圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/REf1MN4uf9UbPBkX6" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -177,7 +201,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/02gu.png" alt="GU圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/QjhwCRWtsW6gSvtv9" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -187,7 +210,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/02daiso.png" alt="大創圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/AP4axE3emPZMkZkZ6" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -197,7 +219,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/02東京站一番街.png" alt="東京站一番街圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/o7e8JW94NggxpLjcA" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -212,12 +233,13 @@
                 </a>
             </section>
 
-            <!-- 第3天 -->
             <section id="day3" class="day-section mb-6 p-5 sm:p-6">
-                <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">第三天 - 淺草 (2025/07/26)</h2>
+                <h2 class="text-xl sm:text-2xl font-semibold mb-3 text-gray-800 flex items-center">
+                    <img src="images/icon.png" alt="日圖示" class="w-6 h-6 mr-2 flex-shrink-0">
+                    第三天 - 淺草 (2025/07/26)
+                </h2>
                 <div class="space-y-4">
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/03淺草寺.png" alt="淺草寺 雷門圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/xcpMjU6yqRJRo7T96" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -227,7 +249,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/03商店街.png" alt="仲見世商店街圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/JAHwE5JCkT9LdA9c8" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -237,7 +258,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/03隅田川.png" alt="隅田公園 (淺草側)圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/z3QFUNmpvxBQkE9R6" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -247,7 +267,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/03晴空塔.png" alt="東京晴空塔圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/yx5tL65omMCZexa87" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -257,7 +276,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/03life.png" alt="LIFE (超市)圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/Nfn9a5DufedRZYL66" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -272,12 +290,13 @@
                 </a>
             </section>
 
-            <!-- 第4天 -->
             <section id="day4" class="day-section mb-6 p-5 sm:p-6">
-                <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">第四天 - 上野 (2025/07/27)</h2>
+                <h2 class="text-xl sm:text-2xl font-semibold mb-3 text-gray-800 flex items-center">
+                    <img src="images/icon.png" alt="日圖示" class="w-6 h-6 mr-2 flex-shrink-0">
+                    第四天 - 上野 (2025/07/27)
+                </h2>
                 <div class="space-y-4">
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/04東照宮.png" alt="上野東照宮圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/CjK1f7pHV9SWRVnA7" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -287,7 +306,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/04公園.png" alt="上野恩賜公園圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/6XujpNh1b157qw9X8" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -297,7 +315,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/04科博館.png" alt="國立科學博物館圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/Zfp83qNMa5V6NC347" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -307,7 +324,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/04神社.png" alt="五條天神社及花園稻荷神社圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/vkcej2igLVXTrHJ88" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -317,7 +333,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/04房家.png" alt="一頭牛燒肉 房家圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/62Yi9E3VY9skUQ1q9" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -327,7 +342,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/04豬排.png" alt="炸豬排 山家 御徒町店圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/FyMzv1j4E8Sk186PA" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -337,7 +351,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/04阿美.png" alt="上野阿美橫町圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/EPdPc2cpktnpGgDk9" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -347,7 +360,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/04二木.png" alt="二木菓子 第一營業所圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/Vt3K2wUKjNQe5tAG8" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -357,7 +369,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/04多慶.png" alt="TAKEYA 1（多慶屋 食品・生活館）圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/HLFXGiLeSgFFG8n99" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -372,12 +383,13 @@
                 </a>
             </section>
 
-            <!-- 第5天 -->
             <section id="day5" class="day-section mb-6 p-5 sm:p-6">
-                <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">第五天 - 龜有 (2025/07/28)</h2>
+                <h2 class="text-xl sm:text-2xl font-semibold mb-3 text-gray-800 flex items-center">
+                    <img src="images/icon.png" alt="日圖示" class="w-6 h-6 mr-2 flex-shrink-0">
+                    第五天 - 龜有 (2025/07/28)
+                </h2>
                 <div class="space-y-4">
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/05帝釋天.png" alt="帝釋天參道圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/12rQ6daVmjX5QvPy9" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -387,7 +399,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/05大和家.png" alt="大和家圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/ei35jZL2yF1uXh2B7" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -397,7 +408,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/05兩津.png" alt="兩津勘吉像圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/iPgrzHu7a4CSyNw76" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -407,7 +417,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/05兩津紀念.png" alt="烏龍派出所紀念館圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/FZL5DWnS6xNQiVpq5" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -417,7 +426,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/05龜有寺.png" alt="龜有香取神社圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/wz7ze77fEfc9Np1y9" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -427,7 +435,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/05ario.png" alt="Ario購物圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/aWfNQh2d9WKYsnDw7" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -442,12 +449,13 @@
                 </a>
             </section>
 
-            <!-- 第6天 -->
             <section id="day6" class="day-section mb-6 p-5 sm:p-6">
-                <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">第六天 - 台場 (2025/07/29)</h2>
+                <h2 class="text-xl sm:text-2xl font-semibold mb-3 text-gray-800 flex items-center">
+                    <img src="images/icon.png" alt="日圖示" class="w-6 h-6 mr-2 flex-shrink-0">
+                    第六天 - 台場 (2025/07/29)
+                </h2>
                 <div class="space-y-4">
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/06diver.png" alt="Diver City 東京廣場圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/YnMb4o9AQBecHf3L9" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -457,7 +465,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/06aqua.png" alt="AQUA CiTY 台場圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/G7r5zpLVsftvTHw97" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -467,7 +474,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/06台場.png" alt="御台場海濱公園圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/fjwC7VzCGLLDvQiDA" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -483,12 +489,13 @@
                 </a>
             </section>
 
-            <!-- 第7天 -->
             <section id="day7" class="day-section mb-6 p-5 sm:p-6">
-                <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">第七天 (2025/07/30)</h2>
+                <h2 class="text-xl sm:text-2xl font-semibold mb-3 text-gray-800 flex items-center">
+                    <img src="images/icon.png" alt="日圖示" class="w-6 h-6 mr-2 flex-shrink-0">
+                    第七天 (2025/07/30)
+                </h2>
                 <div class="space-y-4">
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/07白金.png" alt="白金冰川神社圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/J9YftTMQWY6vHHFa8" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -498,7 +505,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/07王龍.png" alt="豬排 王龍圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/3pehMeHfmWc2Huad8" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -508,7 +514,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/07uniqlo.png" alt="UNIQLO、GU圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/kwJ4k9THbYkDd1Sg8" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -518,15 +523,15 @@
                         </div>
                     </div>
                 </div>
-                <!-- 第七天沒有整體地圖清單連結 -->
-            </section>
+                </section>
 
-            <!-- 第8天 -->
             <section id="day8" class="day-section mb-6 p-5 sm:p-6">
-                <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">第八天 (2025/07/31)</h2>
+                <h2 class="text-xl sm:text-2xl font-semibold mb-3 text-gray-800 flex items-center">
+                    <img src="images/icon.png" alt="日圖示" class="w-6 h-6 mr-2 flex-shrink-0">
+                    第八天 (2025/07/31)
+                </h2>
                 <div class="space-y-4">
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/01羽田機場.png" alt="東京國際機場(羽田機場)圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/NNVyrJffCj24MevGA" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -536,7 +541,6 @@
                         </div>
                     </div>
                     <div class="location-item">
-                        <!-- 請將 src 替換為您的圖片路徑 -->
                         <img src="images/01臺北松山機場.png" alt="臺北松山機場圖片">
                         <div>
                             <a href="https://maps.app.goo.gl/DexyXeqGNFCTgo6R9" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
@@ -546,12 +550,11 @@
                         </div>
                     </div>
                 </div>
-                <!-- 第八天沒有整體地圖清單連結 -->
-            </section>
+                </section>
         </main>
 
         <footer class="text-center text-gray-500 text-sm mt-8">
-            <p>&copy; 2025 東京之旅行程。</p>
+            <p>© 2025 東京之旅行程。</p>
         </footer>
     </div>
 
