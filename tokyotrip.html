@@ -128,7 +128,7 @@
 
         <nav class="mb-6 bg-neutral-100 p-4 rounded-lg shadow-md overflow-x-auto border border-neutral-200">
             <div id="day-nav-container" class="flex flex-wrap justify-center sm:space-x-2">
-                <button class="day-nav-button selected rounded-md bg-blue-200 text-blue-700" data-day="day1">第1天</button>
+                <button class="day-nav-button rounded-md bg-neutral-200 text-neutral-700" data-day="day1">第1天</button>
                 <button class="day-nav-button rounded-md bg-neutral-200 text-neutral-700" data-day="day2">第2天</button>
                 <button class="day-nav-button rounded-md bg-neutral-200 text-neutral-700" data-day="day3">第3天</button>
                 <button class="day-nav-button rounded-md bg-neutral-200 text-neutral-700" data-day="day4">第4天</button>
@@ -565,17 +565,21 @@
 
             // Function to show a specific day section and highlight its button
             function showDay(dayId) {
+                // Hide all day sections
                 daySections.forEach(section => {
                     section.classList.remove('active');
                 });
+                // Remove 'selected' class from all day navigation buttons
                 dayButtons.forEach(button => {
                     button.classList.remove('selected');
                 });
 
+                // Show the target day section
                 const targetSection = document.getElementById(dayId);
                 if (targetSection) {
                     targetSection.classList.add('active');
                 }
+                // Add 'selected' class to the target day navigation button
                 const targetButton = document.querySelector(`.day-nav-button[data-day="${dayId}"]`);
                 if (targetButton) {
                     targetButton.classList.add('selected');
