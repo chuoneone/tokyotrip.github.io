@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>東京八天七夜行程</title>
+    <title>東京行程</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="images/icon.png" type="image/png">
@@ -103,6 +103,14 @@
                 margin-bottom: 8px; /* Add some space between rows */
                 font-size: 0.875rem; /* 小一點的字體，避免文字過長換行 */
             }
+            /* Style for the accommodation text on small screens */
+            .accommodation-text {
+                font-size: 0.875rem; /* text-sm */
+                white-space: nowrap; /* Prevent wrapping */
+                overflow: hidden; /* Hide overflow */
+                text-overflow: ellipsis; /* Show ellipsis for truncated text */
+                display: block; /* Ensure it takes full width for ellipsis to work */
+            }
         }
     </style>
 </head>
@@ -111,16 +119,16 @@
         <header class="mb-8 p-6 bg-white rounded-lg shadow-md border border-neutral-200">
             <div class="flex justify-between items-center mb-4">
                 <div class="text-left">
-                    <h1 class="text-2xl sm:text-3xl font-bold mb-2 text-gray-700">大猋美少女東京之旅</h1>
-                    <p class="text-lg sm:text-xl mb-2 text-gray-600">
-                        <span class="font-semibold text-gray-700">住宿：</span>Dash Living Tsukiji
-                    </p>
+                    <h1 class="text-2xl sm:text-3xl font-bold mb-2 text-gray-700">
+                        <span class="block">大猋美少女東京之旅</span>
+                    </h1>
+
 
                     <a href="https://maps.app.goo.gl/gm9zArea838FoqYw8" target="_blank" rel="noopener noreferrer" class="inline-block bg-blue-200 hover:bg-blue-300 text-blue-700 font-semibold py-2 px-4 rounded-md transition duration-300 ease-in-out border border-blue-200">
                         查看飯店地圖
                     </a>
                 </div>
-                <img src="images/icon.png" alt="行程圖示" class="w-24 h-24 rounded-full shadow-sm">
+                <img src="images/icon.png" alt="行程圖示" class="w-28 h-28 square-full shadow-sm">
             </div>
         </header>
 
@@ -204,7 +212,7 @@
                             <a href="https://maps.app.goo.gl/QjhwCRWtsW6gSvtv9" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
                                 GU
                             </a>
-                            <p class="text-gray-700 text-base sm:text-lg mt-1">購物，有１５％折價</p>
+                            <p class="text-700 text-base sm:text-lg mt-1">購物，有１５％折價</p>
                         </div>
                     </div>
                     <div class="location-item">
@@ -552,8 +560,12 @@
         </main>
 
         <footer class="text-center text-gray-500 text-sm mt-8">
-            <p class="text-lg sm:text-xl mb-2 text-gray-600">
-                <span class="font-semibold text-gray-700">飯店地址：日本〒104-0045 Tokyo, Chuo City, Tsukiji, 6 Chome−1−4 Dash Living Tsukiji</span>
+            <p class="text-lg sm:text-xl mb-2 text-gray-600">                
+                <span class="font-semibold text-gray-700">飯店：</span>
+                <span class="sm:accommodation-text">Dash Living Tsukiji</span>
+                <br>
+                <span class="font-semibold text-gray-700">地址：</span>
+                <span class="sm:accommodation-text">日本〒104-0045 Tokyo, Chuo City, Tsukiji, 6 Chome−1−4 Dash Living Tsukiji</span>
             </p>
         </footer>
     </div>
