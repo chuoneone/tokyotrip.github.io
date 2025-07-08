@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>東京八天七夜行程</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="images/icon.png" type="image/png">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* 淺色背景 */
+            color: #334155;
+        }
+        .container {
+            max-width: 800px;
+        }
+        .day-section {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            display: none; /* 預設隱藏所有行程區塊 */
+        }
+        .day-section.active {
+            display: block; /* 顯示選中的行程區塊 */
+        }
+        .map-list-link {
+            display: inline-block;
+            background-color: #10B981; /* 綠色按鈕 */
+            color: white;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s ease-in-out;
+            margin-top: 16px;
+        }
+        .map-list-link:hover {
+            background-color: #059669;
+        }
+        .day-nav-button {
+            background-color: #cbd5e1; /* 淺灰 */
+            color: #475569;
+            font-weight: 600;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+            flex-grow: 1; /* Allow buttons to grow and fill space */
+            text-align: center;
+        }
+        .day-nav-button.selected {
+            background-color: #3b82f6; /* 藍色 */
+            color: white;
+        }
+        .day-nav-button:hover:not(.selected) {
+            background-color: #94a3b8;
+        }
+        .location-item {
+            display: flex;
+            align-items: flex-start; /* Align items to the top */
+            margin-bottom: 24px; /* Space between location items */
+        }
+        .location-item img {
+            width: 100px; /* Adjust image size for better display */
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 16px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            flex-shrink: 0; /* Prevent image from shrinking */
+        }
+        .location-item div {
+            flex-grow: 1; /* Allow text content to take remaining space */
+        }
+        .location-link {
+            color: #3b82f6; /* Blue link color */
+            text-decoration: none;
+        }
+        .location-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-6 md:p-8">
+    <div class="container mx-auto">
+        <!-- 首頁/行程總覽 -->
+        <header class="text-center mb-8 p-6 bg-white rounded-xl shadow-md">
+            <h1 class="text-3xl sm:text-4xl font-bold mb-2 text-blue-700">大猋美少女東京之旅</h1>
+            <p class="text-lg sm:text-xl mb-4">
+                <span class="font-semibold">住宿：</span>Dash Living Tsukiji            </p>
+                <span class="font-semibold">地址：</span>日本〒104-0045 Tokyo, Chuo City, Tsukiji, 6 Chome−1−4 Dash Living Tsukiji
+            </p>
+            <a href="https://maps.app.goo.gl/gm9zArea838FoqYw8" target="_blank" rel="noopener noreferrer" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out">
+                查看飯店地圖
+            </a>
+        </header>
+
+        <!-- 每日行程導航按鈕 -->
+        <nav class="mb-6 bg-white p-4 rounded-xl shadow-md overflow-x-auto">
+            <div id="day-nav-container" class="flex space-x-2 justify-center">
+                <button class="day-nav-button selected" data-day="day1">第1天</button>
+                <button class="day-nav-button" data-day="day2">第2天</button>
+                <button class="day-nav-button" data-day="day3">第3天</button>
+                <button class="day-nav-button" data-day="day4">第4天</button>
+                <button class="day-nav-button" data-day="day5">第5天</button>
+                <button class="day-nav-button" data-day="day6">第6天</button>
+                <button class="day-nav-button" data-day="day7">第7天</button>
+                <button class="day-nav-button" data-day="day8">第8天</button>
+            </div>
+        </nav>
+
+        <!-- 每日行程詳情 -->
+        <main>
+            <!-- 第1天 -->
+            <section id="day1" class="day-section active mb-6 p-5 sm:p-6">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">第一天 (2025/07/24)</h2>
+                <div class="space-y-4">
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/01臺北松山機場.png" alt="臺北松山機場圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/DexyXeqGNFCTgo6R9" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                臺北松山機場 (TSA)
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">16:50起飛。</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/01羽田機場.png" alt="東京國際機場(羽田機場)圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/NNVyrJffCj24MevGA" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                東京國際機場(羽田機場) (HND)
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">20:50抵達。</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 第一天沒有整體地圖清單連結 -->
+            </section>
+
+            <!-- 第2天 -->
+            <section id="day2" class="day-section mb-6 p-5 sm:p-6">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">第二天 - 築地銀座 (2025/07/25)</h2>
+                <div class="space-y-4">
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/02築地場外市場.png" alt="築地場外市場圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/PxaymyiFNtrJtp659" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                築地場外市場
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">吃早餐。</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/02uniqlo.png" alt="UNIQLO圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/4EYiuXo5FmZL482s8" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                UNIQLO
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">購物-熊本熊卡。</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/02muji.png" alt="無印良品圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/REf1MN4uf9UbPBkX6" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                無印良品
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">購物</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/02gu.png" alt="GU圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/QjhwCRWtsW6gSvtv9" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                GU
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">購物，有１５％折價</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/02daiso.png" alt="大創圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/AP4axE3emPZMkZkZ6" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                大創
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">購物</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/02東京站一番街.png" alt="東京站一番街圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/o7e8JW94NggxpLjcA" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                東京站一番街
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">吃飯（拉麵街、動漫街）。</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="https://maps.app.goo.gl/M5rKWLGmN6As3Fv49" target="_blank" rel="noopener noreferrer" class="map-list-link">
+                    查看第二天地圖清單
+                </a>
+            </section>
+
+            <!-- 第3天 -->
+            <section id="day3" class="day-section mb-6 p-5 sm:p-6">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">第三天 - 淺草 (2025/07/26)</h2>
+                <div class="space-y-4">
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/03淺草寺.png" alt="淺草寺 雷門圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/xcpMjU6yqRJRo7T96" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                淺草寺 雷門
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">拍照。</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/03商店街.png" alt="仲見世商店街圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/JAHwE5JCkT9LdA9c8" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                仲見世商店街
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">吃早餐或午餐。</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/03隅田川.png" alt="隅田公園 (淺草側)圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/z3QFUNmpvxBQkE9R6" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                隅田公園 (淺草側)
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">拍照散步。</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/03晴空塔.png" alt="東京晴空塔圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/yx5tL65omMCZexa87" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                東京晴空塔
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">拍照、逛街、吃飯。</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/03life.png" alt="LIFE (超市)圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/Nfn9a5DufedRZYL66" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                LIFE (超市)
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">購物。</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="https://maps.app.goo.gl/DuRvmfhdkasJgmxk6" target="_blank" rel="noopener noreferrer" class="map-list-link">
+                    查看第三天地圖清單
+                </a>
+            </section>
+
+            <!-- 第4天 -->
+            <section id="day4" class="day-section mb-6 p-5 sm:p-6">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">第四天 - 上野 (2025/07/27)</h2>
+                <div class="space-y-4">
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/04東照宮.png" alt="上野東照宮圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/CjK1f7pHV9SWRVnA7" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                上野東照宮
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">拍照、散步。</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/04公園.png" alt="上野恩賜公園圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/6XujpNh1b157qw9X8" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                上野恩賜公園
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">拍照、散步。</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/04科博館.png" alt="國立科學博物館圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/Zfp83qNMa5V6NC347" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                國立科學博物館
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">要買門票。</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/04神社.png" alt="五條天神社及花園稻荷神社圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/vkcej2igLVXTrHJ88" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                五條天神社及花園稻荷神社 (Gojoten and Hanazono Inari Shrines)
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">拍照、散步。</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/04房家.png" alt="一頭牛燒肉 房家圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/62Yi9E3VY9skUQ1q9" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                一頭牛燒肉 房家
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">要預約，吃商業午餐。</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/04豬排.png" alt="炸豬排 山家 御徒町店圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/FyMzv1j4E8Sk186PA" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                炸豬排 山家 御徒町店
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">便宜豬排飯。</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/04阿美.png" alt="上野阿美橫町圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/EPdPc2cpktnpGgDk9" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                上野阿美橫町
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">逛街。</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/04二木.png" alt="二木菓子 第一營業所圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/Vt3K2wUKjNQe5tAG8" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                二木菓子 第一營業所
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">買零食。</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/04多慶.png" alt="TAKEYA 1（多慶屋 食品・生活館）圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/HLFXGiLeSgFFG8n99" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                TAKEYA 1（多慶屋 食品・生活館）
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">購物，有22%折價。</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="https://maps.app.goo.gl/V1RYdJ2XRzgQjTuc6" target="_blank" rel="noopener noreferrer" class="map-list-link">
+                    查看第四天地圖清單
+                </a>
+            </section>
+
+            <!-- 第5天 -->
+            <section id="day5" class="day-section mb-6 p-5 sm:p-6">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">第五天 - 龜有 (2025/07/28)</h2>
+                <div class="space-y-4">
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/05帝釋天.png" alt="帝釋天參道圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/12rQ6daVmjX5QvPy9" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                帝釋天參道
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">逛街、吃早餐。</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/05大和家.png" alt="大和家圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/ei35jZL2yF1uXh2B7" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                大和家
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">吃午餐。</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/05兩津.png" alt="兩津勘吉像圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/iPgrzHu7a4CSyNw76" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                兩津勘吉像
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">拍照。</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/05兩津紀念.png" alt="烏龍派出所紀念館圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/FZL5DWnS6xNQiVpq5" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                烏龍派出所紀念館
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">要買門票。</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/05龜有寺.png" alt="龜有香取神社圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/wz7ze77fEfc9Np1y9" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                龜有香取神社
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">拍照。</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/05ario.png" alt="Ario購物圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/aWfNQh2d9WKYsnDw7" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                Ario購物
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">購物。</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="https://maps.app.goo.gl/2V1bU3VhxXn2HWdc7" target="_blank" rel="noopener noreferrer" class="map-list-link">
+                    查看第五天地圖清單
+                </a>
+            </section>
+
+            <!-- 第6天 -->
+            <section id="day6" class="day-section mb-6 p-5 sm:p-6">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">第六天 - 台場 (2025/07/29)</h2>
+                <div class="space-y-4">
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/06diver.png" alt="Diver City 東京廣場圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/YnMb4o9AQBecHf3L9" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                Diver City 東京廣場
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">逛街。</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/06aqua.png" alt="AQUA CiTY 台場圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/G7r5zpLVsftvTHw97" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                AQUA CiTY 台場
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">逛街。</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/06台場.png" alt="御台場海濱公園圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/fjwC7VzCGLLDvQiDA" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                御台場海濱公園
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">拍照。</p>
+                        </div>
+                    </div>
+
+                </div>
+                <a href="https://maps.app.goo.gl/i6iyi7AB3DeR5Nsc7" target="_blank" rel="noopener noreferrer" class="map-list-link">
+                    查看第六天地圖清單
+                </a>
+            </section>
+
+            <!-- 第7天 -->
+            <section id="day7" class="day-section mb-6 p-5 sm:p-6">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">第七天 (2025/07/30)</h2>
+                <div class="space-y-4">
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/07白金.png" alt="白金冰川神社圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/J9YftTMQWY6vHHFa8" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                白金冰川神社
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">拍照。</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/07王龍.png" alt="豬排 王龍圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/3pehMeHfmWc2Huad8" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                豬排 王龍
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">吃午餐。</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/07uniqlo.png" alt="UNIQLO、GU圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/kwJ4k9THbYkDd1Sg8" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                UNIQLO、GU
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">逛街買買，GU折15%。</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 第七天沒有整體地圖清單連結 -->
+            </section>
+
+            <!-- 第8天 -->
+            <section id="day8" class="day-section mb-6 p-5 sm:p-6">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">第八天 (2025/07/31)</h2>
+                <div class="space-y-4">
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/01羽田機場.png" alt="東京國際機場(羽田機場)圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/NNVyrJffCj24MevGA" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                東京國際機場(羽田機場) (HND)
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">13:20起飛，10:20前到機場。</p>
+                        </div>
+                    </div>
+                    <div class="location-item">
+                        <!-- 請將 src 替換為您的圖片路徑 -->
+                        <img src="images/01臺北松山機場.png" alt="臺北松山機場圖片">
+                        <div>
+                            <a href="https://maps.app.goo.gl/DexyXeqGNFCTgo6R9" target="_blank" rel="noopener noreferrer" class="location-link text-xl sm:text-2xl font-semibold">
+                                臺北松山機場 (TSA)
+                            </a>
+                            <p class="text-gray-700 text-base sm:text-lg mt-1">15:50抵達。</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 第八天沒有整體地圖清單連結 -->
+            </section>
+        </main>
+
+        <footer class="text-center text-gray-500 text-sm mt-8">
+            <p>&copy; 2025 東京之旅行程。</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dayButtons = document.querySelectorAll('.day-nav-button');
+            const daySections = document.querySelectorAll('.day-section');
+
+            // Function to show a specific day section and highlight its button
+            function showDay(dayId) {
+                daySections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                dayButtons.forEach(button => {
+                    button.classList.remove('selected');
+                });
+
+                const targetSection = document.getElementById(dayId);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                }
+                const targetButton = document.querySelector(`.day-nav-button[data-day="${dayId}"]`);
+                if (targetButton) {
+                    targetButton.classList.add('selected');
+                }
+            }
+
+            // Add click event listeners to day navigation buttons
+            dayButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const dayId = this.dataset.day;
+                    showDay(dayId);
+                });
+            });
+
+            // Show the first day by default on load
+            showDay('day1');
+        });
+    </script>
+</body>
+</html>
