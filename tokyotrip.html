@@ -112,6 +112,27 @@
                 display: block; /* Ensure it takes full width for ellipsis to work */
             }
         }
+
+        /* CSS for the slide-in animation */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-in-text {
+            animation: slideInUp 1s ease-out forwards;
+            opacity: 0; /* Ensures it starts invisible */
+        }
+
+        .slide-in-text.delay-1 {
+            animation-delay: 0.3s; /* Delays the second line's animation */
+        }
     </style>
 </head>
 <body class="p-4 sm:p-6 md:p-8 bg-neutral-100">
@@ -120,7 +141,8 @@
             <div class="flex justify-between items-center mb-4">
                 <div class="text-left">
                     <h1 class="text-2xl sm:text-3xl font-bold mb-2 text-gray-700">
-                        <span class="block">大猋美少女東京之旅</span>
+                        <span class="block slide-in-text">大猋美少女</span>
+                        <span class="block slide-in-text delay-1">東京之旅</span>
                     </h1>
 
 
@@ -560,7 +582,7 @@
         </main>
 
         <footer class="text-center text-gray-500 text-sm mt-8">
-            <p class="text-lg sm:text-xl mb-2 text-gray-600">                
+            <p class="text-lg sm:text-xl mb-2 text-gray-600">
                 <span class="font-semibold text-gray-700">飯店：</span>
                 <span class="sm:accommodation-text">Dash Living Tsukiji</span>
                 <br>
